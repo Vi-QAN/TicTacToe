@@ -80,6 +80,7 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
+        // extract col and row from i 
         location: {
           col: i % 3,
           row: Math.floor(i / 3)
@@ -103,7 +104,9 @@ class Game extends React.Component {
     const moves = history.map((step,move) => {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       return (
-        <li key={move}>
+        // change class name by iterating through moves then comparing against step number
+        // updated in state 
+        <li className={move === this.state.stepNumber ? 'active-item' : null} key={move} >
           <button onClick={() => this.jumpTo(move)}>{desc} </button>
           <p>Column:  {step.location.col} Row: {step.location.row}</p>
         </li>
