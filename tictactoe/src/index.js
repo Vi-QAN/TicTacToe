@@ -20,6 +20,14 @@ class Board extends React.Component {
               onClick = {() => this.props.onClick(i)}/>;
   }
 
+  // renderBoard(){
+  //   for (let i = 0; i < 3; i++){
+  //     for (let j = 0; j < 3; j++){
+  //       this.renderSquare
+  //     }
+  //   }
+  // }
+
   render() {
     return (
       <div>
@@ -51,9 +59,13 @@ class Game extends React.Component {
       history: [{
         // before first move
         squares: Array(9).fill(null),
-
+        location: {
+          col: null,
+          row: null
+        }
       }],
-      stepNumber: 0
+      stepNumber: 0,
+      
     }
   }
 
@@ -66,9 +78,12 @@ class Game extends React.Component {
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
-      
       history: history.concat([{
         squares: squares,
+        location: {
+          col: i % 3,
+          row: Math.floor(i / 3)
+        },
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext});
@@ -89,7 +104,7 @@ class Game extends React.Component {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button onClick={() => this.jumpTo(move)}>{desc} {step.location.col} {step.location.row}</button>
         </li>
       )
     })
