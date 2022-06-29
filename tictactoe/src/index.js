@@ -87,6 +87,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       isAscending: true,
+      isDraw: false,
     }
   }
 
@@ -139,6 +140,18 @@ class Game extends React.Component {
     return String.fromCodePoint(parseInt(unicode,16));
   }
 
+  // check for game draw
+  boardCheck(squares){
+    for (let i = 0; i < squares.length;i++){
+      if (squares[i] === null){
+        return false;
+      }
+    }
+    return true;
+    
+    
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -159,6 +172,9 @@ class Game extends React.Component {
     if (winner.winner){
       status = 'Winner: ' + winner.winner;
       
+    }
+    else if (this.boardCheck(current.squares)){
+      status = 'Game draw';
     }
     else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
